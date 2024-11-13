@@ -14,13 +14,32 @@ async function scrapePetFoodRecalls() {
     const $ = cheerio.load(data);
     const recalls = [];
 
-    // Select and extract relevant data
-    $(".recall-list-item").each((index, element) => {
-      const title = $(element).find("h3").text().trim();
-      const date = $(element).find(".date").text().trim();
-      const link = "https://www.fda.gov" + $(element).find("a").attr("href");
+    $("#datatable tbody tr").each((index, element) => {
+      const date = $(element).find("td").eq(0).text().trim(); // Date
+      const brandName = $(element).find("td").eq(1).text().trim(); // Brand Name(s)
+      const productDescription = $(element).find("td").eq(2).text().trim(); // Product Description
+      const recallReason = $(element).find("td").eq(3).text().trim(); // Recall Reason Description
+      const companyName = $(element).find("td").eq(4).text().trim(); // Company Name
 
-      recalls.push({ title, date, link });
+      // Log the whole row's HTML to inspect it
+      console.log("Row HTML:", $(element).html()); // Log row HTML
+
+      // Look for <a> tags in the Brand Name(s) column (eq(1))
+      const link = $(element).find("td").eq(1).find("a").attr("href");
+      console.log("Link found:", link); // Log the link to check if it's extracted
+
+      // Ensure the link is a full URL (relative or absolute)
+      const fullLink = link ? "https://www.fda.gov" + link : null;
+
+      // Push each row's data, including the link
+      recalls.push({
+        date,
+        brandName,
+        productDescription,
+        recallReason,
+        companyName,
+        link: fullLink,
+      });
     });
 
     return recalls;
