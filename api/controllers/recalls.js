@@ -62,12 +62,12 @@ async function extractArticle(url) {
 
     article.push({
       announcementDate,
-      company,
       brandName,
-      productDescription,
+      company,
       productType,
-      link,
+      productDescription,
       contactInfo: contactInfo ? contactInfo.replace("mailto:", "") : null,
+      link,
     });
 
     return article;

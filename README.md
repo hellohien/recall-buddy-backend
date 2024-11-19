@@ -6,6 +6,7 @@ The backend for the _Recall Buddy_ mobile app. This server handles API requests 
 
 - Scrapes real-time pet food recall information from the FDA’s recall market withdrawals and safety alerts page.
 - Provides API endpoints for retrieving recall details based on article links.
+- Sends notifications for new pet food recalls.
 
 ## Getting Started
 
